@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AR Circuito Didático</title>
+
+<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+
+<style>
+body { margin:0; overflow:hidden; }
+
+#btn {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 20px;
+  background: #ff4444;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+}
+</style>
+</head>
+
+<body>
+
+<button id="btn" onclick="abrirFalstad()">⚡ Simular circuito</button>
+
+<script>
+function abrirFalstad(){
+  window.open("https://falstad.com/circuit/circuitjs.html", "_blank");
+}
+</script>
+
+<a-scene embedded arjs>
+
+<a-marker preset="hiro">
+
+  <!-- ===== FUNDO (IMAGEM DO CIRCUITO) ===== -->
+  <!-- SUBSTITUA PELA SUA IMAGEM -->
+  <a-plane 
+    src="a_malha.png"
+    position="0 0.5 0"
+    rotation="-90 0 0"
+    width="4"
+    height="2">
+  </a-plane>
+
+  <!-- ===== NÓ CENTRAL INTERATIVO ===== -->
+  <a-sphere 
+    id="noCentral"
+    position="0 0.5 0.1"
+    radius="0.1"
+    color="yellow">
+  </a-sphere>
+
+  <!-- ===== SETA i1 ===== -->
+  <a-cone position="-1 0.8 0.1"
+          radius-bottom="0.05"
+          height="0.3"
+          color="pink"
+          rotation="0 0 90">
+  </a-cone>
+
+  <a-text value="i1"
+          position="-1.2 1 0.1"
+          color="pink">
+  </a-text>
+
+  <!-- ===== SETA i2 ===== -->
+  <a-cone position="1 0.8 0.1"
+          radius-bottom="0.05"
+          height="0.3"
+          color="pink"
+          rotation="0 0 90">
+  </a-cone>
+
+  <a-text value="i2"
+          position="1 1 0.1"
+          color="pink">
+  </a-text>
+
+  <!-- ===== TEXTO DE EQUAÇÃO ===== -->
+  <a-text id="eq"
+          value=""
+          position="0 1.8 0"
+          color="yellow"
+          align="center"
+          width="4"
+          visible="false">
+  </a-text>
+
+</a-marker>
+
+<a-entity camera></a-entity>
+
+</a-scene>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+  const no = document.querySelector("#noCentral");
+  const eq = document.querySelector("#eq");
+
+  no.addEventListener("click", function(){
+
+    eq.setAttribute("value",
+      "Analise nodal:\n" +
+      "(V - 42)/6 + (V - 10)/4 + V/3 = 0"
+    );
+
+    eq.setAttribute("visible", "true");
+
+  });
+
+});
+</script>
+
+</body>
+</html>
